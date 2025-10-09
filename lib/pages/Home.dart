@@ -32,7 +32,7 @@ class _HomeState extends State<Home> {
               ),
               const SizedBox(height: 8),
               Text(
-                'Explore delicious recipes by category',
+                'Explore delicious recipes from around the world.',
                 style: TextStyle(
                   fontSize: 16,
                   color: Colors.grey[600],
