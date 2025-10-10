@@ -3,7 +3,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 
-class Singlemealservice {
+class SingleMealService {
   Future<List<Meal>> getSingleMeals(String id) async {
     final response = await http.get(
         Uri.parse('https://www.themealdb.com/api/json/v1/1/lookup.php?i=$id'));

@@ -1,3 +1,4 @@
+import 'package:cook_book/pages/MealRecipe.dart';
 import 'package:cook_book/service/MealsService.dart';
 import 'package:flutter/material.dart';
 
@@ -121,7 +122,14 @@ class _MealsState extends State<Meals> {
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => MealRecipe(id: meal.idMeal),
+                        ),
+                      );
+                    },
                     borderRadius: BorderRadius.circular(20),
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(20),
