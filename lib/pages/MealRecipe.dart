@@ -17,7 +17,9 @@ class _MealrecipeState extends State<MealRecipe> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color.fromARGB(86, 213, 204, 230),
       appBar: AppBar(
+        backgroundColor: const Color.fromARGB(86, 213, 204, 230),
         title: Text(
           'Recipe Details',
           style: TextStyle(
