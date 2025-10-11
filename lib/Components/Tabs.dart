@@ -25,22 +25,102 @@ class Tabs extends StatelessWidget {
             ],
           ),
           SizedBox(
-            height: 300,
-            child: TabBarView(children: [
-              Center(
-                child: ListView.builder(
-                  itemCount: meal[0].ingredients.length,
-                  itemBuilder: (context, index) => Text(
-                      "${meal[0].measures[index]} ,    ${meal[0].ingredients[index]}"),
-                ),
+            height: MediaQuery.of(context).size.height * 0.5,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TabBarView(
+                children: [
+                  Center(
+                    child: ListView.builder(
+                      itemCount: meal[0].ingredients.length,
+                      itemBuilder: (context, index) {
+                        final measure = meal[0].measures[index];
+                        final ingredient = meal[0].ingredients[index];
+                        if (measure == null || measure.trim().isEmpty) {
+                          return const SizedBox.shrink(); // an invisible widget
+                        }
+                        return Row(
+                          children: [
+                            const Icon(Icons.check_circle_outline,
+                                color: Colors.blue, size: 20),
+                            const SizedBox(width: 8),
+                            Expanded(
+                              child: Text(
+                                "$measure • $ingredient",
+                                style: const TextStyle(
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ),
+                          ],
+                        );
+                      },
+                    ),
+                  ),
+                  Center(
+                    child: SingleChildScrollView(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children:
+                            _formatInstructions(meal[0].strInstructions ?? ''),
+                      ),
+                    ),
+                  )
+                ],
               ),
-              Center(
-                child: Text(meal[0].strInstructions ?? ''),
-              )
-            ]),
+            ),
           )
         ],
       ),
     );
+  }
+
+  List<Widget> _formatInstructions(String instructions) {
+    final steps = instructions
+        .replaceAll('\r', '')
+        .split(RegExp(r'\n+'))
+        .where((line) => line.trim().isNotEmpty)
+        .toList();
+
+    return List.generate(steps.length, (index) {
+      final step = steps[index].trim();
+      return Padding(
+        padding: const EdgeInsets.only(bottom: 12.0),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              width: 28,
+              height: 28,
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                color: Colors.blue[100],
+                borderRadius: BorderRadius.circular(14),
+              ),
+              child: Text(
+                '${index + 1}',
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.blue,
+                ),
+              ),
+            ),
+            const SizedBox(width: 10),
+            Expanded(
+              child: Text(
+                step,
+                style: const TextStyle(
+                  fontSize: 16,
+                  height: 1.5,
+                  color: Colors.black87,
+                ),
+              ),
+            ),
+          ],
+        ),
+      );
+    });
   }
 }
